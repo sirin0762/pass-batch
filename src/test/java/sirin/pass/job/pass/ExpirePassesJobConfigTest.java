@@ -29,14 +29,16 @@ import static org.assertj.core.api.Assertions.*;
 @SpringBootTest
 @ActiveProfiles("test")
 @ContextConfiguration(classes = {ExpirePassesJobConfig.class, TestBatchConfig.class})
-@RequiredArgsConstructor
 class ExpirePassesJobConfigTest {
 
-    @Autowired
     private final JobLauncherTestUtils jobLauncherTestUtils;
+    private final PassRepository passRepository;
 
     @Autowired
-    private final PassRepository passRepository;
+    public ExpirePassesJobConfigTest(JobLauncherTestUtils jobLauncherTestUtils, PassRepository passRepository) {
+        this.jobLauncherTestUtils = jobLauncherTestUtils;
+        this.passRepository = passRepository;
+    }
 
     @Test
     public void expirePassesStep() throws Exception {
@@ -49,7 +51,7 @@ class ExpirePassesJobConfigTest {
 
         // then
         assertThat(jobExecution.getExitStatus()).isEqualTo(ExitStatus.COMPLETED);
-        assertThat(jobInstance.getJobName()).isEqualTo("expiredPassesJob");
+        assertThat(jobInstance.getJobName()).isEqualTo("expirePassesJob");
     }
 
 

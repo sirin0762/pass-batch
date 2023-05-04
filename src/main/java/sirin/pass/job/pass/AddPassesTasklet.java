@@ -19,7 +19,6 @@ import sirin.pass.repository.user.UserGroupMappingRepository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -47,8 +46,7 @@ public class AddPassesTasklet implements Tasklet {
             bulkPassEntity.setStatus(BulkPassStatus.COMPLETED);
         }
 
-
-        return null;
+        return RepeatStatus.FINISHED;
     }
 
     private int addPasses(BulkPassEntity bulkPassEntity, List<String> userIds) {
@@ -57,6 +55,7 @@ public class AddPassesTasklet implements Tasklet {
             PassEntity passEntity = PassModelMapper.INSTANCE.toPassEntity(bulkPassEntity, userId);
             passEntities.add(passEntity);
         }
+
         return passRepository.saveAll(passEntities).size();
     }
 

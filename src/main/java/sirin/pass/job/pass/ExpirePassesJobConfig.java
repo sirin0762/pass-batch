@@ -13,6 +13,7 @@ import org.springframework.batch.item.database.JpaCursorItemReader;
 import org.springframework.batch.item.database.builder.JpaCursorItemReaderBuilder;
 import org.springframework.batch.item.database.builder.JpaItemWriterBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import sirin.pass.repository.pass.PassEntity;
 import sirin.pass.repository.pass.PassStatus;
 
@@ -20,7 +21,7 @@ import javax.persistence.EntityManagerFactory;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-@EnableBatchProcessing
+@Configuration
 @RequiredArgsConstructor
 public class ExpirePassesJobConfig {
 
@@ -49,7 +50,7 @@ public class ExpirePassesJobConfig {
 
     @Bean
     @StepScope
-    private JpaCursorItemReader<PassEntity> expirePassItemReader() {
+    public JpaCursorItemReader<PassEntity> expirePassItemReader() {
         return new JpaCursorItemReaderBuilder<PassEntity>()
             .name("expirePassItemReader")
             .entityManagerFactory(entityManagerFactory)
@@ -59,7 +60,7 @@ public class ExpirePassesJobConfig {
     }
 
     @Bean
-    private ItemProcessor<PassEntity, PassEntity> expirePassesItemProcessor() {
+    public ItemProcessor<PassEntity, PassEntity> expirePassesItemProcessor() {
         return passEntity -> {
             passEntity.setStatus(PassStatus.EXPIRED);
             passEntity.setExpiredAt(LocalDateTime.now());
@@ -68,7 +69,7 @@ public class ExpirePassesJobConfig {
     }
 
     @Bean
-    private ItemWriter<? super PassEntity> expirePassesItemWriter() {
+    public ItemWriter<? super PassEntity> expirePassesItemWriter() {
         return new JpaItemWriterBuilder<PassEntity>()
             .entityManagerFactory(entityManagerFactory)
             .build();

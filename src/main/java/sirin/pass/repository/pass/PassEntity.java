@@ -3,6 +3,7 @@ package sirin.pass.repository.pass;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import sirin.pass.repository.BaseEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 @ToString
 @Entity
 @Table(name = "pass")
-public class PassEntity {
+public class PassEntity extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long passSeq;

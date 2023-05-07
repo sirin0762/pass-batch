@@ -1,5 +1,6 @@
 package sirin.pass;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -12,23 +13,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
+@RequiredArgsConstructor
 public class PassBatchApplication {
 
-    @Autowired
     private final JobBuilderFactory jobBuilderFactory;
-
-    @Autowired
     private final StepBuilderFactory stepBuilderFactory;
-
-    public PassBatchApplication(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory) {
-        this.jobBuilderFactory = jobBuilderFactory;
-        this.stepBuilderFactory = stepBuilderFactory;
-    }
 
     public static void main(String[] args) {
         SpringApplication.run(PassBatchApplication.class, args);
     }
-
 
     @Bean
     public Step passStep() {

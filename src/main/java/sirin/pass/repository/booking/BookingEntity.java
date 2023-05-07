@@ -3,6 +3,8 @@ package sirin.pass.repository.booking;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import sirin.pass.repository.BaseEntity;
+import sirin.pass.repository.pass.PassEntity;
 import sirin.pass.repository.user.UserEntity;
 
 import javax.persistence.Entity;
@@ -22,7 +24,7 @@ import java.time.LocalDateTime;
 @ToString
 @Entity
 @Table(name = "booking")
-public class BookingEntity {
+public class BookingEntity extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookingSeq;
@@ -41,5 +43,9 @@ public class BookingEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", insertable = false, updatable = false)
     private UserEntity userEntity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "passSeq", insertable = false, updatable = false)
+    private PassEntity passEntity;
 
 }

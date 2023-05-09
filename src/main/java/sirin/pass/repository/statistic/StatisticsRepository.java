@@ -18,6 +18,6 @@ public interface StatisticsRepository extends JpaRepository<StatisticsEntity, Lo
         + "         FROM    StatisticsEntity s "
         + "         WHERE   s.statisticsAt BETWEEN :from AND :to"
         + "         GROUP BY s.statisticsAt")
-    List<AggregatedStatistics> findByStatisticsAtBetweenAndGroupBy(@Param("from") LocalDateTime from, LocalDateTime to);
+    List<AggregatedStatistics> findByStatisticsAtBetweenAndGroupBy(@Param("from") LocalDateTime from, @Param("to") LocalDateTime to);
 
 }

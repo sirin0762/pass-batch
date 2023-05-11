@@ -4,11 +4,17 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import sirin.pass.repository.BaseEntity;
+import sirin.pass.repository.packaze.PackageEntity;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
@@ -26,6 +32,7 @@ public class PassEntity extends BaseEntity {
 
     private String userId;
 
+    @Enumerated(EnumType.STRING)
     private PassStatus status;
 
     private Integer remainingCount;
@@ -35,5 +42,9 @@ public class PassEntity extends BaseEntity {
     private LocalDateTime endedAt;
 
     private LocalDateTime expiredAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "packageSeq", insertable = false, updatable = false)
+    private PackageEntity packageEntity;
 
 }

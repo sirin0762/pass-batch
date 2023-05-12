@@ -22,4 +22,6 @@ public interface PackageRepository extends JpaRepository<PackageEntity, Long> {
     )
     int updateCountAndPeriod(Long packageSeq, Integer count, Integer period);
 
+    List<PackageEntity> findAllByOrderByPackageName();
+
 }

@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Setter
 @ToString
 @Entity
-@Table(name = "user_group_mappping")
+@Table(name = "user_group_mapping")
 @IdClass(UserGroupMappingId.class)
 public class UserGroupMappingEntity {
 

@@ -7,10 +7,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import sirin.pass.repository.statistic.StatisticsRepository;
 import sirin.pass.service.packaze.PackageService;
 import sirin.pass.service.pass.BulkPassService;
+import sirin.pass.service.statistics.StatisticsService;
 import sirin.pass.service.user.UserGroupMappingService;
+import sirin.pass.utils.LocalDateTimeUtils;
+
+import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -20,9 +26,12 @@ public class AdminViewController {
     private final BulkPassService bulkPassService;
     private final PackageService packageService;
     private final UserGroupMappingService userGroupMappingService;
+    private final StatisticsService statisticsService;
 
     @GetMapping
-    public ModelAndView home(ModelAndView modelAndView) {
+    public ModelAndView home(ModelAndView modelAndView, @RequestParam(name = "to") String toString) {
+        LocalDateTime to = LocalDateTimeUtils.parseDate(toString);
+        modelAndView.addObject("chartData", statisticsService.makeChartData(to));
         modelAndView.setViewName("admin/index");
         return modelAndView;
     }
